@@ -17,8 +17,10 @@ Template("experiment.csv", row => {
                             as: ["1", "2", "3", "4", "5", "6", "7"],  
                             presentAsScale: true,                             
                             instructions: "Use number keys or click boxes to answer.",    
-                            leftComment: "(Bad)", 
-                            rightComment: "(Good)"})
+                            leftComment: "(Very rare)", 
+                            rightComment: "(Very frequent)"})
+                .css("white-space", "nowrap")
+                .center()
                 .print()
                 .log()
                 .wait()
@@ -37,7 +39,7 @@ var items = [
     ["sendresults", "__SendResults__", { }],    
     ["consent", "Form", { html: { include: "consent.html" } }],
     ["demo", "Form", { html: { include: "demo.html" }, validators: { age: function (s) { if (s.match(/^\d+$/)) return true; else return "Bad value for \u2018age\u2019";} } }],
-    ["intro", "Form", { html: { include: "intro.html" } }],
+    ["norming", "Form", { html: { include: "norming.html" } }],
     ["startpractice", Message, {consentRequired: false, html: ["div", ["p", "First you can do eight practice sentences."]]}],
   // message that experiment is beginning
     ["starter", Message, {consentRequired: false, html: ["div", ["p", "Time to start the main portion of the experiment!"]]}],
