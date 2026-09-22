@@ -9,6 +9,25 @@ var defaults = [
     }
 ];
 
+// trial to collect participant ID - add “IDentry” to sequence
+newTrial("IDentry",
+    newVar("partID").global(), // declare partID as a global variable
+    newText("instr", "Please enter your Prolific ID:").print(),
+    newHtml("partpage", "<input type='text' id='partID' name='participant ID' min='1' max='120'>").print(),
+    newButton("Next").print().wait(
+        getVar("partID").set(v => $("#partID").val()).testNot.is('') // wait for a valid input
+    )
+)
+.log("partID", getVar("partID")); // ;og participant ID
+// header to log ID on every trial
+// run at the beginning of each trial
+Header(
+    newVar("partID").global() 
+)
+.log("partID", getVar("partID")); // log ID for each trial
+
+
+
 // this is set up to use classic ibex latin squaring                         
 Template("experiment.csv", row => {
     items.push(
@@ -17,8 +36,8 @@ Template("experiment.csv", row => {
                             as: ["1", "2", "3", "4", "5", "6", "7"],  
                             presentAsScale: true,                             
                             instructions: "Use number keys or click boxes to answer.",    
-                            leftComment: "(Very rare)", 
-                            rightComment: "(Very frequent)"})
+                            leftComment: "(Very unnatural)", 
+                            rightComment: "(Very natural)"})
                 .css("white-space", "nowrap")
                 .center()
                 .print()
