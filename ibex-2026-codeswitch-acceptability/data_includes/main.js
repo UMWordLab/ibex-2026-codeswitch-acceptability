@@ -27,6 +27,34 @@ Header(
 .log("partID", getVar("partID")); // log ID for each trial
 
 
+//practice                     
+Template("practice_sentences.csv", row => 
+    newTrial("practice",
+        newController("AcceptabilityJudgment", {s: row.sentence,
+                        as: ["1", "2", "3", "4", "5", "6", "7"],
+                        presentAsScale: true,
+                        instructions: "Use number keys or click boxes to answer.",
+                        leftComment: "(Very unnatural)",
+                        rightComment: "(Very natural)"})
+            .css("white-space", "nowrap")
+            .center()
+            .print()
+            .log()
+            .wait()
+        ,
+        //feedback
+        newText("<p>" + row.feedback + "</p>")
+            .center()
+            .print()
+        ,
+        newButton("continue","continue")
+            .print("center at 50vw", "middle at 70vh")
+            .wait()
+    )
+    .log("sentence", row.sentence)
+)
+
+
 
 // this is set up to use classic ibex latin squaring                         
 Template("experiment.csv", row => {
@@ -59,7 +87,7 @@ var items = [
     ["consent", "Form", { html: { include: "consent.html" } }],
     ["demo", "Form", { html: { include: "demo.html" }, validators: { age: function (s) { if (s.match(/^\d+$/)) return true; else return "Bad value for \u2018age\u2019";} } }],
     ["norming", "Form", { html: { include: "norming.html" } }],
-    ["startpractice", Message, {consentRequired: false, html: ["div", ["p", "First you can do eight practice sentences."]]}],
+    ["startpractice", Message, {consentRequired: false, html: ["div", ["p", "First you can do six practice sentences."]]}],
   // message that experiment is beginning
     ["starter", Message, {consentRequired: false, html: ["div", ["p", "Time to start the main portion of the experiment!"]]}],
     ["completion", "Form", {continueMessage: null, html: { include: "completion.html" } } ]
